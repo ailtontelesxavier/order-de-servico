@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Lista de Clientes</h1>
+
+  <a
+    href="{% url 'crm:cliente_create' %}"
+    class="btn btn-primary"
+  >Adicionar</a>
+
+  <form id="searchForm">
+    <input
+      id="id_search"
+      name="search"
+      class="form-control"
+      type="text"
+      placeholder="Busca..."
+      autofocus
+    />
+  </form>
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Razão Social</th>
+            <th>CNPJ</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for object in object_list %}
+            <tr>
+              <td>
+                <a href="{{ object.get_absolute_url }}">{{ object.razao_social }}</a>
+              </td>
+              <td>{{ object.cnpj }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% include "includes/pagination.html" %}
+    </div>
+  </div>
+{% endblock content %}
+
+{% block js %}
+  <script>
+// Get the input field and form
+    var input = document.getElementById("id_search");
+    var form = document.getElementById("searchForm");
+
+// Add event listener for keypress
+    input.addEventListener("keypress", function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault(); // Prevent form submission via Enter key
+        form.submit(); // Submit the form
+      }
+    });
+  </script>
+{% endblock js %}
