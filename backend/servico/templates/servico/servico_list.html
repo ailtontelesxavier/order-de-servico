@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Lista de Servico</h1>
+
+  <a
+    href="{% url 'servico:servico_create' %}"
+    class="btn btn-primary"
+  >Adicionar</a>
+
+  <form id="searchForm">
+    <input
+      id="id_search"
+      name="search"
+      class="form-control"
+      type="text"
+      placeholder="Busca..."
+      autofocus
+    />
+  </form>
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for object in object_list %}
+            <tr>
+              <td>
+                <a href="{{ object.get_absolute_url }}">{{ object.titulo }}</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% include "includes/pagination.html" %}
+    </div>
+  </div>
+{% endblock content %}
+
+{% block js %}
+  <script>
+// Get the input field and form
+    var input = document.getElementById("id_search");
+    var form = document.getElementById("searchForm");
+
+// Add event listener for keypress
+    input.addEventListener("keypress", function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault(); // Prevent form submission via Enter key
+        form.submit(); // Submit the form
+      }
+    });
+  </script>
+{% endblock js %}

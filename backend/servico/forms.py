@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import OrdemServico
+from .models import OrdemServico, Servico
 
 
 class OrdemServicoForm(forms.ModelForm):
@@ -21,3 +21,9 @@ class OrdemServicoForm(forms.ModelForm):
     class Meta:
         model = OrdemServico
         fields = ('situacao',)
+
+
+class ServicoForm(forms.ModelForm):
+    class Meta:
+        model = Servico
+        fields = ['titulo']

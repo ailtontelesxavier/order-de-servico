@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse_lazy
 
 from backend.crm.models import Cliente
 
@@ -13,6 +14,9 @@ class Servico(models.Model):
 
     def __str__(self):
         return f'{self.titulo}'
+
+    def get_absolute_url(self):
+        return reverse_lazy('servico:servico_detail', kwargs={'pk': self.pk})
 
 
 SITUACAO = (

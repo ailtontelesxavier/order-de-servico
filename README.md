@@ -25,6 +25,7 @@ pip freeze >> requirements.txt
 pip freeze | grep django-ninja >> requirements.txt
 pip install django-localflavor
 pip install django-widget-tweaks
+pip install djhtml
 
 
 git clone https://github.com/rg3915/ordem-de-servico.git

@@ -1,7 +1,16 @@
 from django.shortcuts import render
+from django.db.models import Q
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    UpdateView
+)
 
-from .forms import OrdemServicoForm
-from .models import OrdemServico
+
+from .forms import OrdemServicoForm, ServicoForm
+from .models import OrdemServico, Servico
 
 
 def ordem_servico_list(request):
@@ -35,3 +44,34 @@ def ordem_servico_update(request, pk):
 
 def ordem_servico_delete(request, pk):
     ...
+
+
+class ServicoListView(ListView):
+    model = Servico
+    paginate_by = 20
+
+    def get_queryset(self):
+        qs = self.model.objects.all()
+        search = self.request.GET.get('search')
+        if search:
+            qs = qs.filter(Q(titulo__icontains=search))
+        return qs
+
+
+class ServicoDetailView(DetailView):
+    model = Servico
+
+
+class ServicoCreateView(CreateView):
+    model = Servico
+    form_class = ServicoForm
+
+
+class ServicoUpdateView(UpdateView):
+    model = Servico
+    form_class = ServicoForm
+
+
+# class ServicoDeleteView(DeleteView):
+#     model = Servico
+#     success_url = reverse_lazy('servico:servico_list')
